@@ -2,6 +2,7 @@ fn main() {
     first_test();
     second_test();
     third_test();
+    forth_test();
 }
 
 fn first_test() {
@@ -45,6 +46,51 @@ fn third_test() {
     println!("Test passed!");
 }
 
+fn forth_test() {
+    let test1 = "We need more space.";
+    assert_eq!(trim_spaces(test1), "We need more space.");
+
+    let test2 = String::from("   There's space in front."); 
+    assert_eq!(trim_spaces(&test2), "There's space in front.");
+
+    let test3 = String::from("There's space to the rear.   ");
+    assert_eq!(trim_spaces(&test3[..]), "There's space to the rear.");
+
+    let test4 = "    We're surrounded by space!    ";
+    assert_eq!(trim_spaces(test4), "We're surrounded by space!");
+
+    let test5 = "      ";
+    assert_eq!(trim_spaces(test5), "");
+
+    let test6 = ""; 
+    assert_eq!(trim_spaces(test6), "");
+
+    let test7 = " 🚀 ";
+    assert_eq!(trim_spaces(test7), "🚀");
+
+    println!("Test passed!");
+}
+
 fn celsius_to_fahrenheit(degrees: f64) -> f64 {
     (1.8 * degrees) + 32.0 
+}
+
+fn trim_spaces(s: &str) -> &str {
+    let mut start = 0;
+    for (index, character) in s.chars().enumerate() {
+        if character != ' ' {
+            start = index;
+            break;
+        }
+    }
+
+    let mut end = 0;
+    for (index, character) in s.chars().rev().enumerate() {
+        if character != ' ' {
+            end = s.len() - index;
+            break;
+        }
+    }
+
+   &s[start..end]
 }
