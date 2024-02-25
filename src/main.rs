@@ -1,4 +1,10 @@
 fn main() {
+    first_test();
+    second_test();
+    third_test();
+}
+
+fn first_test() {
     let a = 13;
     let b = 2.3;
     let c: f32 = 120.0;
@@ -6,12 +12,16 @@ fn main() {
     let average = (a as f64 + b as f64 + c as f64) / 3.0;
     assert_eq!(average, 45.1);
     println!("Test passed!");
+}
 
+fn second_test() {
     let celsius_temp = 23.0;
     let fahrenheit_temp = celsius_to_fahrenheit(celsius_temp);
     assert_eq!(fahrenheit_temp, 73.4);
     println!("Test passed!");
+}
 
+fn third_test() {
     let numbers = [1, 9, -2, 0, 23, 20, -7, 13, 37, 20, 56, -18, 20, 3];
     let mut max: i32 = 0;
     let mut min: i32 = 0;
