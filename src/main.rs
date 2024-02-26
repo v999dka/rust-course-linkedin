@@ -2,6 +2,31 @@ use std::{fs, io, env};
 use rand::prelude::thread_rng;
 use rand::Rng;
 
+#[derive(Debug)]
+#[derive(Clone)]
+pub struct Rectangle {
+    width: f64,
+    height: f64,
+}
+
+impl Rectangle {
+    fn new(width: f64, height: f64) -> Rectangle {
+        Rectangle {
+            width: width,
+            height: height
+        }
+    }
+
+    fn get_area(&self) -> f64 {
+        self.width * self.height
+    }
+
+    fn scale(&mut self, scale: f64) -> () {
+        self.width *= scale;
+        self.height *= scale;
+    }
+}
+
 fn main() {
     first_test();
     second_test();
@@ -9,6 +34,7 @@ fn main() {
     fourth_test();
     fifth_test();
     sixth_test();
+    seventh_test();
 }
 
 fn first_test() {
@@ -86,7 +112,7 @@ fn fifth_test() {
     loop {
         println!("Insert number: ");
         let mut stdin = String::new();
-        io::stdin().read_line(&mut stdin);
+        let _ = io::stdin().read_line(&mut stdin);
         let num: i32 = stdin.trim().parse().unwrap();
 
         if rand_number > num {
@@ -122,6 +148,17 @@ fn sixth_test() {
     }
     
     println!("Not found {} on {}", search_value, filename);
+    println!("Test passed!");
+}
+
+fn seventh_test() {
+    let mut rect = Rectangle::new(1.2, 3.4);
+    println!("{:?}", rect);
+    assert_eq!(rect.get_area(), 4.08);
+
+    rect.scale(0.5);
+    assert_eq!(rect.get_area(), 1.02);
+
     println!("Test passed!");
 }
 
