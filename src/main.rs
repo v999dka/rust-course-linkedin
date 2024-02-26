@@ -1,6 +1,7 @@
-use std::io;
+use std::{fs, io};
 use rand::prelude::thread_rng;
 use rand::Rng;
+use std::env;
 
 fn main() {
     first_test();
@@ -8,6 +9,7 @@ fn main() {
     third_test();
     fourth_test();
     fifth_test();
+    sixth_test();
 }
 
 fn first_test() {
@@ -102,6 +104,27 @@ fn fifth_test() {
     println!("Test passed!");
 }
 
+fn sixth_test() {
+    let filename: String = env::args().nth(1).unwrap(); 
+    let search_value: String = env::args().nth(2).unwrap(); 
+    let mut result: bool = false;
+
+    let content = fs::read_to_string(&filename).unwrap();
+    for line in content.lines() {
+        if line == search_value {
+            result = true;
+            break;
+        }
+    }
+    
+    if result == true {
+        println!("Found {} on {}", search_value, filename);
+    } else {
+        println!("Not found {} on {}", search_value, filename);
+    }
+
+    println!("Test passed!");
+}
 fn celsius_to_fahrenheit(degrees: f64) -> f64 {
     (1.8 * degrees) + 32.0 
 }
