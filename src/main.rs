@@ -1,8 +1,13 @@
+use std::io;
+use rand::prelude::thread_rng;
+use rand::Rng;
+
 fn main() {
     first_test();
     second_test();
     third_test();
-    forth_test();
+    fourth_test();
+    fifth_test();
 }
 
 fn first_test() {
@@ -46,7 +51,7 @@ fn third_test() {
     println!("Test passed!");
 }
 
-fn forth_test() {
+fn fourth_test() {
     let test1 = "We need more space.";
     assert_eq!(trim_spaces(test1), "We need more space.");
 
@@ -68,6 +73,32 @@ fn forth_test() {
     let test7 = " 🚀 ";
     assert_eq!(trim_spaces(test7), "🚀");
 
+    println!("Test passed!");
+}
+
+fn fifth_test() {
+    println!("---------------------------------------------------");
+    let rand_number = thread_rng().gen_range(0..100); 
+
+    println!("rand_number {}", rand_number);
+    println!("Higher or lower?");
+    loop {
+        println!("Insert number: ");
+        let mut stdin = String::new();
+        io::stdin().read_line(&mut stdin);
+        let num: i32 = stdin.trim().parse().unwrap();
+
+        if rand_number > num {
+            println!("Higher");
+        } else if rand_number < num {
+            println!("Lower");
+        } else {
+            println!("Winner!!");
+            break;
+        }
+    }
+
+    println!("---------------------------------------------------");
     println!("Test passed!");
 }
 
