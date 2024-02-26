@@ -1,7 +1,6 @@
-use std::{fs, io};
+use std::{fs, io, env};
 use rand::prelude::thread_rng;
 use rand::Rng;
-use std::env;
 
 fn main() {
     first_test();
