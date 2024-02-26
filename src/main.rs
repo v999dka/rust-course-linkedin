@@ -104,26 +104,28 @@ fn fifth_test() {
 }
 
 fn sixth_test() {
+    // Added from the tutorial
+    //
+    if env::args().len() < 2 {
+        eprintln!("Program require two arguments: <file path> <search name>");
+        std::process::exit(1);
+    }
+
     let filename: String = env::args().nth(1).unwrap(); 
     let search_value: String = env::args().nth(2).unwrap(); 
-    let mut result: bool = false;
 
-    let content = fs::read_to_string(&filename).unwrap();
-    for line in content.lines() {
+    for line in fs::read_to_string(&filename).unwrap().lines() {
         if line == search_value {
-            result = true;
-            break;
+            println!("Found {} on {}", search_value, filename);
+            println!("Test passed!");
+            return;
         }
     }
     
-    if result == true {
-        println!("Found {} on {}", search_value, filename);
-    } else {
-        println!("Not found {} on {}", search_value, filename);
-    }
-
+    println!("Not found {} on {}", search_value, filename);
     println!("Test passed!");
 }
+
 fn celsius_to_fahrenheit(degrees: f64) -> f64 {
     (1.8 * degrees) + 32.0 
 }
