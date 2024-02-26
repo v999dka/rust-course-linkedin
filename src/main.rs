@@ -105,7 +105,6 @@ fn fifth_test() {
 
 fn sixth_test() {
     // Added from the tutorial
-    //
     if env::args().len() < 2 {
         eprintln!("Program require two arguments: <file path> <search name>");
         std::process::exit(1);
