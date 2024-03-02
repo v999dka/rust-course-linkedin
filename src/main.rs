@@ -1,9 +1,8 @@
-use std::{fs, io, env};
 use rand::prelude::thread_rng;
 use rand::Rng;
+use std::{env, fs, io};
 
-#[derive(Debug)]
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct Rectangle {
     width: f64,
     height: f64,
@@ -13,7 +12,7 @@ impl Rectangle {
     fn new(width: f64, height: f64) -> Rectangle {
         Rectangle {
             width: width,
-            height: height
+            height: height,
         }
     }
 
@@ -32,9 +31,10 @@ fn main() {
     second_test();
     third_test();
     fourth_test();
-    fifth_test();
+    //fifth_test(); # NOTE: commented to make easier the tests of the new challenges
     sixth_test();
     seventh_test();
+    eighth_test();
 }
 
 fn first_test() {
@@ -44,14 +44,14 @@ fn first_test() {
 
     let average = (a as f64 + b as f64 + c as f64) / 3.0;
     assert_eq!(average, 45.1);
-    println!("Test passed!");
+    println!("1. Test passed!");
 }
 
 fn second_test() {
     let celsius_temp = 23.0;
     let fahrenheit_temp = celsius_to_fahrenheit(celsius_temp);
     assert_eq!(fahrenheit_temp, 73.4);
-    println!("Test passed!");
+    println!("2. Test passed!");
 }
 
 fn third_test() {
@@ -59,14 +59,14 @@ fn third_test() {
     let mut max: i32 = 0;
     let mut min: i32 = 0;
     let mut mean: f64 = 0.0;
-    
+
     for &number in numbers.iter() {
         if number < min {
             min = number;
         } else if number > max {
             max = number;
         }
-        
+
         mean += number as f64;
     }
 
@@ -75,14 +75,14 @@ fn third_test() {
     assert_eq!(max, 56);
     assert_eq!(min, -18);
     assert_eq!(mean, 12.5);
-    println!("Test passed!");
+    println!("3. Test passed!");
 }
 
 fn fourth_test() {
     let test1 = "We need more space.";
     assert_eq!(trim_spaces(test1), "We need more space.");
 
-    let test2 = String::from("   There's space in front."); 
+    let test2 = String::from("   There's space in front.");
     assert_eq!(trim_spaces(&test2), "There's space in front.");
 
     let test3 = String::from("There's space to the rear.   ");
@@ -94,18 +94,19 @@ fn fourth_test() {
     let test5 = "      ";
     assert_eq!(trim_spaces(test5), "");
 
-    let test6 = ""; 
+    let test6 = "";
     assert_eq!(trim_spaces(test6), "");
 
     let test7 = " 🚀 ";
     assert_eq!(trim_spaces(test7), "🚀");
 
-    println!("Test passed!");
+    println!("4. Test passed!");
 }
 
+#[allow(dead_code)]
 fn fifth_test() {
     println!("---------------------------------------------------");
-    let rand_number = thread_rng().gen_range(0..100); 
+    let rand_number = thread_rng().gen_range(0..100);
 
     println!("rand_number {}", rand_number);
     println!("Higher or lower?");
@@ -126,7 +127,7 @@ fn fifth_test() {
     }
 
     println!("---------------------------------------------------");
-    println!("Test passed!");
+    println!("5. Test passed!");
 }
 
 fn sixth_test() {
@@ -136,8 +137,8 @@ fn sixth_test() {
         std::process::exit(1);
     }
 
-    let filename: String = env::args().nth(1).unwrap(); 
-    let search_value: String = env::args().nth(2).unwrap(); 
+    let filename: String = env::args().nth(1).unwrap();
+    let search_value: String = env::args().nth(2).unwrap();
 
     for line in fs::read_to_string(&filename).unwrap().lines() {
         if line == search_value {
@@ -146,9 +147,9 @@ fn sixth_test() {
             return;
         }
     }
-    
+
     println!("Not found {} on {}", search_value, filename);
-    println!("Test passed!");
+    println!("6. Test passed!");
 }
 
 fn seventh_test() {
@@ -159,11 +160,23 @@ fn seventh_test() {
     rect.scale(0.5);
     assert_eq!(rect.get_area(), 1.02);
 
-    println!("Test passed!");
+    println!("7. Test passed!");
+}
+
+fn eighth_test() {
+    let one = Box::new(1);
+    let two = Box::new(2);
+    assert_eq!(*sum_boxes(one, two), 3);
+
+    let pi = Box::new(3.14159);
+    let e = Box::new(2.71828);
+    assert_eq!(*sum_boxes(pi, e), 5.85987);
+
+    println!("8. Test passed!");
 }
 
 fn celsius_to_fahrenheit(degrees: f64) -> f64 {
-    (1.8 * degrees) + 32.0 
+    (1.8 * degrees) + 32.0
 }
 
 fn trim_spaces(s: &str) -> &str {
@@ -183,5 +196,9 @@ fn trim_spaces(s: &str) -> &str {
         }
     }
 
-   &s[start..end]
+    &s[start..end]
+}
+
+fn sum_boxes<T: std::ops::Add<Output = T>>(a: Box<T>, b: Box<T>) -> Box<T> {
+    Box::new(*a + *b)
 }
