@@ -1,11 +1,26 @@
 use rand::prelude::thread_rng;
 use rand::Rng;
-use std::{env, fs, io};
+use std::{env, fmt, fs, io};
 
 #[derive(Debug, Clone)]
-pub struct Rectangle {
+struct Rectangle {
     width: f64,
     height: f64,
+}
+
+struct Satellite {
+    name: String,
+    velocity: f64,
+}
+
+impl fmt::Display for Satellite {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(
+            f,
+            "is a satellite with the name {} and a speed of {}",
+            self.name, self.velocity
+        )
+    }
 }
 
 impl Rectangle {
@@ -35,6 +50,7 @@ fn main() {
     sixth_test();
     seventh_test();
     eighth_test();
+    nineth_test();
 }
 
 fn first_test() {
@@ -173,6 +189,16 @@ fn eighth_test() {
     assert_eq!(*sum_boxes(pi, e), 5.85987);
 
     println!("8. Test passed!");
+}
+
+fn nineth_test() {
+    let hubble = Satellite {
+        name: String::from("Hubble Telescope"),
+        velocity: 4.72,
+    };
+    println!("hubble is {}", hubble);
+
+    println!("9. Test passed!");
 }
 
 fn celsius_to_fahrenheit(degrees: f64) -> f64 {
