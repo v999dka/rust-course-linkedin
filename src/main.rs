@@ -13,6 +13,22 @@ struct Satellite {
     velocity: f64,
 }
 
+enum Location {
+    Unknown,
+    Anonymous,
+    Known(f64, f64),
+}
+
+impl Location {
+    fn display(&self) -> String {
+        match *self {
+            Location::Unknown => String::from("Unknown location..."),
+            Location::Anonymous => String::from("Anonymous location ..."),
+            Location::Known(x, y) => format!("known location at ({}, {})", x, y),
+        }
+    }
+}
+
 impl fmt::Display for Satellite {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
@@ -47,10 +63,11 @@ fn main() {
     third_test();
     fourth_test();
     //fifth_test(); # NOTE: commented to make easier the tests of the new challenges
-    sixth_test();
+    //sixth_test(); # NOTE: commented to make easier the tests of the new challenges
     seventh_test();
     eighth_test();
     nineth_test();
+    tenth_test();
 }
 
 fn first_test() {
@@ -146,6 +163,7 @@ fn fifth_test() {
     println!("5. Test passed!");
 }
 
+#[allow(dead_code)]
 fn sixth_test() {
     // Added from the tutorial
     if env::args().len() < 2 {
@@ -199,6 +217,19 @@ fn nineth_test() {
     println!("hubble is {}", hubble);
 
     println!("9. Test passed!");
+}
+
+fn tenth_test() {
+    let address = Location::Unknown;
+    address.display();
+
+    let address = Location::Anonymous;
+    address.display();
+
+    let address = Location::Known(28.608295, -80.604177);
+    address.display();
+
+    println!("10. Test passed!");
 }
 
 fn celsius_to_fahrenheit(degrees: f64) -> f64 {
