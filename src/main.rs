@@ -1,6 +1,6 @@
 use rand::prelude::thread_rng;
 use rand::Rng;
-use std::{env, fmt, fs, io};
+use std::{collections::HashMap, env, fmt, fs, io};
 
 #[derive(Debug, Clone)]
 struct Rectangle {
@@ -22,9 +22,9 @@ enum Location {
 impl Location {
     fn display(&self) {
         match *self {
-            Location::Unknown => println!("Unknown location..."),
-            Location::Anonymous => println!("Anonymous location ..."),
-            Location::Known(x, y) => println!("known location at ({}, {})", x, y),
+            Location::Unknown => println!("\tUnknown location..."),
+            Location::Anonymous => println!("\tAnonymous location ..."),
+            Location::Known(x, y) => println!("\tknown location at ({}, {})", x, y),
         }
     }
 }
@@ -59,35 +59,64 @@ impl Rectangle {
 
 fn main() {
     first_test();
+    println!("");
+
     second_test();
+    println!("");
+
     third_test();
+    println!("");
+
     fourth_test();
-    //fifth_test(); // NOTE: commented to make easier the tests of the new challenges
-    //sixth_test(); // NOTE: commented to make easier the tests of the new challenges
+    println!("");
+
+    fifth_test();
+    println!("");
+
+    sixth_test();
+    println!("");
+
     seventh_test();
+    println!("");
+
     eighth_test();
+    println!("");
+
     nineth_test();
+    println!("");
+
     tenth_test();
+    println!("");
+
+    eleventh_test();
+    println!("");
 }
 
 fn first_test() {
+    println!("1. Test started");
     let a = 13;
     let b = 2.3;
     let c: f32 = 120.0;
 
     let average = (a as f64 + b as f64 + c as f64) / 3.0;
     assert_eq!(average, 45.1);
+
     println!("1. Test passed!");
 }
 
 fn second_test() {
+    println!("2. Test started");
+
     let celsius_temp = 23.0;
     let fahrenheit_temp = celsius_to_fahrenheit(celsius_temp);
     assert_eq!(fahrenheit_temp, 73.4);
+
     println!("2. Test passed!");
 }
 
 fn third_test() {
+    println!("3. Test started");
+
     let numbers = [1, 9, -2, 0, 23, 20, -7, 13, 37, 20, 56, -18, 20, 3];
     let mut max: i32 = 0;
     let mut min: i32 = 0;
@@ -108,10 +137,13 @@ fn third_test() {
     assert_eq!(max, 56);
     assert_eq!(min, -18);
     assert_eq!(mean, 12.5);
+
     println!("3. Test passed!");
 }
 
 fn fourth_test() {
+    println!("4. Test started");
+
     let test1 = "We need more space.";
     assert_eq!(trim_spaces(test1), "We need more space.");
 
@@ -136,48 +168,50 @@ fn fourth_test() {
     println!("4. Test passed!");
 }
 
-#[allow(dead_code)]
 fn fifth_test() {
-    println!("---------------------------------------------------");
+    println!("5. Test started");
+
     let rand_number = thread_rng().gen_range(0..100);
 
-    println!("rand_number {}", rand_number);
-    println!("Higher or lower?");
+    println!("\trand_number {}", rand_number);
+    println!("\tHigher or lower?");
 
     loop {
-        println!("Insert number: ");
+        println!("\tInsert number: ");
         let mut stdin = String::new();
         let num: u32 = match io::stdin().read_line(&mut stdin) {
             Ok(_) => match stdin.trim().parse::<u32>() {
                 Ok(num) => num,
                 Err(_) => {
-                    println!("Choose a valid number");
+                    println!("\tChoose a valid number");
                     continue;
                 }
             },
             Err(_) => {
-                println!("Choose a valid number");
+                println!("\tChoose a valid number");
                 continue;
             }
         };
 
         if rand_number > num {
-            println!("Higher");
+            println!("\tHigher");
         } else if rand_number < num {
-            println!("Lower");
+            println!("\tLower");
         } else {
-            println!("Winner!!");
+            println!("\tWinner!!");
             break;
         }
     }
 
-    println!("---------------------------------------------------");
+    println!("\t---------------------------------------------------");
+
     println!("5. Test passed!");
 }
 
 #[allow(dead_code)]
 fn sixth_test() {
-    // Added from the tutorial
+    println!("6. Test started");
+
     if env::args().len() < 2 {
         eprintln!("Program require two arguments: <file path> <search name>");
         std::process::exit(1);
@@ -188,19 +222,21 @@ fn sixth_test() {
 
     for line in fs::read_to_string(&filename).unwrap().lines() {
         if line == search_value {
-            println!("Found {} on {}", search_value, filename);
-            println!("Test passed!");
+            println!("\tFound {} on {}", search_value, filename);
+            println!("\tTest passed!");
             return;
         }
     }
 
-    println!("Not found {} on {}", search_value, filename);
+    println!("\tNot found {} on {}", search_value, filename);
+
     println!("6. Test passed!");
 }
 
 fn seventh_test() {
+    println!("7. Test started");
+
     let mut rect = Rectangle::new(1.2, 3.4);
-    println!("{:?}", rect);
     assert_eq!(rect.get_area(), 4.08);
 
     rect.scale(0.5);
@@ -210,6 +246,8 @@ fn seventh_test() {
 }
 
 fn eighth_test() {
+    println!("8. Test started");
+
     let one = Box::new(1);
     let two = Box::new(2);
     assert_eq!(*sum_boxes(one, two), 3);
@@ -222,16 +260,20 @@ fn eighth_test() {
 }
 
 fn nineth_test() {
+    println!("9. Test started");
+
     let hubble = Satellite {
         name: String::from("Hubble Telescope"),
         velocity: 4.72,
     };
-    println!("hubble is {}", hubble);
+    println!("\thubble is {}", hubble);
 
     println!("9. Test passed!");
 }
 
 fn tenth_test() {
+    println!("10. Test started");
+
     let address = Location::Unknown;
     address.display();
 
@@ -242,6 +284,69 @@ fn tenth_test() {
     address.display();
 
     println!("10. Test passed!");
+}
+
+fn eleventh_test() {
+    println!("11. Test started");
+
+    if env::args().len() < 2 {
+        eprintln!("Program require two arguments: <file path>");
+        std::process::exit(1);
+    }
+
+    let filename: String = match env::args().nth(1) {
+        Some(e) => e,
+        None => {
+            eprintln!("A problem occur parsing your arguments");
+            std::process::exit(1);
+        }
+    };
+
+    let buf = match fs::read_to_string(&filename) {
+        Ok(b) => b.to_lowercase(),
+        Err(e) => match e.kind() {
+            io::ErrorKind::NotFound => {
+                eprintln!("A problem occur parsing your arguments");
+                std::process::exit(1);
+            }
+            io::ErrorKind::OutOfMemory => {
+                eprintln!("A problem occur parsing your arguments");
+                std::process::exit(1);
+            }
+            _ => {
+                eprintln!("A problem occur parsing your arguments");
+                std::process::exit(1);
+            }
+        },
+    };
+
+    let mut words = HashMap::new();
+    let mut top_count: u32 = 32;
+    let mut top_word: Vec<&str> = Vec::new();
+
+    for line in buf.lines() {
+        for word in line.split_whitespace() {
+            let exist = words.entry(word).or_insert(0);
+            *exist += 1;
+        }
+    }
+
+    for (&key, &val) in words.iter() {
+        if val > top_count {
+            top_count = val;
+            top_word.clear();
+            top_word.push(key);
+        } else if val == top_count {
+            top_word.push(key);
+        }
+    }
+
+    println!("\tTop word(s) ocurred {}:", top_count);
+    for top in top_word.iter() {
+        println!("\t\t'{}'", top)
+    }
+
+    println!("11. Test passed!");
 }
 
 fn celsius_to_fahrenheit(degrees: f64) -> f64 {
