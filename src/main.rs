@@ -62,8 +62,8 @@ fn main() {
     second_test();
     third_test();
     fourth_test();
-    //fifth_test(); # NOTE: commented to make easier the tests of the new challenges
-    //sixth_test(); # NOTE: commented to make easier the tests of the new challenges
+    //fifth_test(); // NOTE: commented to make easier the tests of the new challenges
+    //sixth_test(); // NOTE: commented to make easier the tests of the new challenges
     seventh_test();
     eighth_test();
     nineth_test();
@@ -143,11 +143,23 @@ fn fifth_test() {
 
     println!("rand_number {}", rand_number);
     println!("Higher or lower?");
+
     loop {
         println!("Insert number: ");
         let mut stdin = String::new();
-        let _ = io::stdin().read_line(&mut stdin);
-        let num: i32 = stdin.trim().parse().unwrap();
+        let num: u32 = match io::stdin().read_line(&mut stdin) {
+            Ok(_) => match stdin.trim().parse::<u32>() {
+                Ok(num) => num,
+                Err(_) => {
+                    println!("Choose a valid number");
+                    continue;
+                }
+            },
+            Err(_) => {
+                println!("Choose a valid number");
+                continue;
+            }
+        };
 
         if rand_number > num {
             println!("Higher");
