@@ -20,11 +20,11 @@ enum Location {
 }
 
 impl Location {
-    fn display(&self) -> String {
+    fn display(&self) {
         match *self {
-            Location::Unknown => String::from("Unknown location..."),
-            Location::Anonymous => String::from("Anonymous location ..."),
-            Location::Known(x, y) => format!("known location at ({}, {})", x, y),
+            Location::Unknown => println!("Unknown location..."),
+            Location::Anonymous => println!("Anonymous location ..."),
+            Location::Known(x, y) => println!("known location at ({}, {})", x, y),
         }
     }
 }
